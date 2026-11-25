@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VoltageSec Obfuscator</title>
+  <meta name="description" content="VoltageSec V1 public Luau obfuscator with Discord sign-in, advanced presets, and deployable web access." />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/">VoltageSec</a>
+      <nav class="nav-links">
+        <a href="#workspace">Workspace</a>
+        <a href="#features">Features</a>
+        <a href="#deploy">Deploy</a>
+        <a href="/docs" target="_blank" rel="noreferrer">API Docs</a>
+      </nav>
+      <div id="authArea" class="auth-area">
+        <a class="button secondary" href="/auth/discord">Sign in with Discord</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">VoltageSec V1</p>
+          <h1>A clearer view of your code.</h1>
+          <p class="hero-copy">
+            Find the signal in the script. Obfuscate, analyze, and refine your Lua in
+            a workspace built for clarity.
+          </p>          <div class="hero-actions">
+            <a class="button primary" href="#workspace">Open workspace</a>
+            <a class="button secondary" href="#features">View features</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h2>Service status</h2>
+          <ul>
+            <li>Public obfuscation access</li>
+            <li>Discord-authenticated workspace</li>
+            <li>API key access remains separate and protected</li>
+            <li>Minified single-line output</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="workspace" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Obfuscation workspace</h2>
+          <p>Sign in with Discord to run the compiler from the browser.</p>
+        </div>
+
+        <div id="signedOutPanel" class="panel">
+          <h3>Discord sign-in required</h3>
+          <p>The web workspace is available to signed-in Discord users. Bot obfuscation remains public separately.</p>
+          <a class="button primary" href="/auth/discord">Sign in with Discord</a>
+        </div>
+
+        <div id="workspacePanel" class="panel hidden">
+          <div class="workspace-grid">
+            <div class="workspace-column">
+              <label for="source">Source</label>
+              <textarea id="source" spellcheck="false" placeholder="print('hello world')"></textarea>
+              <div class="upload-row">
+                <input id="fileInput" type="file" accept=".lua,.luau,.txt" />
+                <button id="clearSource" class="button secondary" type="button">Clear</button>
+              </div>
+
+              <div class="options-grid">
+                <div>
+                  <label for="preset">Preset</label>
+                  <select id="preset"></select>
+                </div>
+                <div>
+                  <label for="seed">Seed</label>
+                  <input id="seed" type="text" placeholder="random" />
+                </div>
+                <div>
+                  <label for="compression">Compression</label>
+                  <input id="compression" type="text" placeholder="auto" />
+                </div>
+                <div>
+                  <label for="antiTamper">Anti-tamper</label>
+                  <select id="antiTamper">
+                    <option value="">Preset default</option>
+                    <option value="true">Enabled</option>
+                    <option value="false">Disabled</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="invite-box">
+                <label>
+                  <input id="injectInvite" type="checkbox" />
+                  Inject Discord invite opener
+                </label>
+                <input id="discordInvite" type="text" placeholder="discord.gg/your-server or invite code" />
+                <p class="muted">
+                  This setting is website-only. The injected snippet is best-effort and depends on the target executor.
+                </p>
+              </div>
+
+              <div class="action-row">
+                <button id="obfuscateButton" class="button primary" type="button">Obfuscate</button>
+                <button id="copyOutput" class="button secondary" type="button">Copy output</button>
+                <button id="downloadOutput" class="button secondary" type="button">Download</button>
+              </div>
+            </div>
+
+            <div class="workspace-column">
+              <label for="output">Output</label>
+              <textarea id="output" readonly spellcheck="false"></textarea>
+              <div id="metrics" class="metrics"></div>
+              <details>
+                <summary>Diagnostics</summary>
+                <pre id="diagnostics"></pre>
+              </details>
+            </div>
+          </div>
+          <p id="status" class="status"></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section alt">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Protection features</h2>
+          <p>The website exposes the same hardened compiler stack used by the service.</p>
+        </div>
+        <div class="feature-grid">
+          <article>
+            <h3>VM virtualization</h3>
+            <p>Functions are lowered into custom bytecode with shuffled blocks, constants, locals, and prototypes.</p>
+          </article>
+          <article>
+            <h3>Opcode randomization</h3>
+            <p>Seeded opcode tables, position-dependent masks, sparse dispatch IDs, and indirect dispatch.</p>
+          </article>
+          <article>
+            <h3>V2 encryption</h3>
+            <p>SHA-256-derived keys, opcode S-boxes, and a second stream-cipher layer.</p>
+          </article>
+          <article>
+            <h3>Integrity checks</h3>
+            <p>Per-record checksums, stream digests, prototype integrity, and canary guards.</p>
+          </article>
+          <article>
+            <h3>Hardened compression</h3>
+            <p>Measured compression pipelines with multiple transforms and strong stages.</p>
+          </article>
+          <article>
+            <h3>Minified output</h3>
+            <p>The emitted artifact is compacted to a single executable line after the header.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="deploy" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Render deployment</h2>
+          <p>The website is a FastAPI service and can be deployed directly from GitHub.</p>
+        </div>
+        <div class="deploy-grid">
+          <div>
+            <h3>Build command</h3>
+            <code>pip install -r website/requirements.txt</code>
+          </div>
+          <div>
+            <h3>Start command</h3>
+            <code>uvicorn website.main:app --host 0.0.0.0 --port $PORT</code>
+          </div>
+          <div>
+            <h3>Required environment</h3>
+            <ul>
+              <li><code>DISCORD_CLIENT_ID</code></li>
+              <li><code>DISCORD_CLIENT_SECRET</code></li>
+              <li><code>DISCORD_REDIRECT_URI</code></li>
+              <li><code>SESSION_SECRET</code></li>
+              <li><code>SITE_URL</code></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>VoltageSec V1 web obfuscator. Compiler output is deterministic for the same source, seed, and settings.</p>
+    </div>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
+EOF

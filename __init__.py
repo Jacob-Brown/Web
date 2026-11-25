@@ -1,0 +1,1 @@
+"""VoltageSec web obfuscator."""
